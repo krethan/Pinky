@@ -166,6 +166,9 @@
                     if (typeof element === 'function') {
                         try {
                             value = element();
+                            if(value instanceof Promise){
+                                args.push(value);    
+                            }
                         } catch (e) {
                             value = e;
                         }
@@ -210,8 +213,7 @@
     };
     
     Promise.prototype.done = function(callback) {
-        this.then(callback);
-        return this;
+        return this.then(callback);
     };
 
     module.exports = Promise;
